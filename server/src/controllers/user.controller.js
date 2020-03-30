@@ -21,10 +21,16 @@ module.exports.createUser = async (req, res, next) => {
 
 module.exports.getUser = async (req, res, next) => {
   try {
+    const user = await User.findById(req.params.id, {
+      __v: false,
+    });
+    if (user) {
+      return res.send(user);
+    }
+    res.status(404).send('Not found');
 
   } catch (e) {
     next(e);
   }
-
 };
 
